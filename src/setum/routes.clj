@@ -28,5 +28,7 @@
   (GET "/quiz/" req
        (quizpage))
   (GET "/jawab/" req
-       (resp/edn {:angka (rand-int 10)})))
+       (resp/edn {:angka [{:name "calvin" :job "dope" }
+                          {:name "calvin2" :job "dope2" }
+                          {:name "calvin3" :job "dope3" }]})))
 

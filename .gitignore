@@ -41,3 +41,8 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+.nrepl-port
+setum.log
+/target
+resources/public/js/app.js

@@ -7,7 +7,7 @@
 (defn read-class [id]
   (str (.-className (selid id))))
 
-(def apapun (re/atom 0))
+(def apapun (re/atom []))
 
 (defn home-component []
   [:div
@@ -19,7 +19,9 @@
   [:div
    [:h3 "I am a hero"]
    [:h1 (str @apapun)]
+   [:h1 (str (first @apapun))]
    [:button {:on-click #(ambil-jawaban)}]
+   [:button {:on-click (next-soal)}]
 ])
 
 (defn page [page]
@@ -30,6 +32,9 @@
 
 (defn ambil-jawaban []
   (GET "/jawab/" {:handler ambil-callback}))
+
+(defn next-soal [response]
+  (swap! apapun next))
 
 (defn start [page]
   (condp = page

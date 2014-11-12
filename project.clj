@@ -58,7 +58,7 @@
               :env {:dev true}}}
   :url "http://example.com/FIXME"
   :main setum.core
-  :jvm-opts ["-server"]
+  :jvm-opts ["-Xmx128m"]
   :plugins [[lein-ring "0.8.11"]
             [codox "0.8.10"]
             [lein-expectations "0.0.8"]

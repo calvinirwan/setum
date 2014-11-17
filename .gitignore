@@ -43,6 +43,8 @@ Temporary Items
 .apdisk
 
 .nrepl-port
+.lein-env
+.lein-repl-history
 setum.log
 /target
 resources/public/js/app.js

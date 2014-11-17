@@ -1,6 +1,8 @@
 (ns setum.core
   (:require [reagent.core :as re]
-            [ajax.core :refer [GET POST]]))
+            [ajax.core :refer [GET POST]]
+            #_[clojure.browser.repl]))
+
 (defn selid [id]
   (.getElementById js/document id))
 
@@ -20,9 +22,8 @@
    [:h3 "I am a hero"]
    [:h1 (str @apapun)]
    [:h1 (str (first @apapun))]
-   [:button {:on-click #(ambil-jawaban)}]
-   [:button {:on-click (next-soal)}]
-])
+   [:button {:on-click #(ambil-jawaban)}]]
+)
 
 (defn page [page]
   (read-class (selid page)))
@@ -32,9 +33,6 @@
 
 (defn ambil-jawaban []
   (GET "/jawab/" {:handler ambil-callback}))
-
-(defn next-soal [response]
-  (swap! apapun next))
 
 (defn start [page]
   (condp = page

@@ -1,7 +1,7 @@
 (ns setum.core
   (:require [reagent.core :as re]
             [ajax.core :refer [GET POST]]
-            #_[clojure.browser.repl]))
+            [clojure.browser.repl]))
 
 (defn selid [id]
   (.getElementById js/document id))
@@ -13,7 +13,7 @@
 
 (defn home-component []
   [:div
-   [:h3 "melikey!"]])
+   [:h3 "melikey! faky"]])
 
 (declare ambil-jawaban)
 

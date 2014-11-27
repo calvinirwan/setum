@@ -30,8 +30,6 @@
   :cljsbuild {:builds
               [{:source-paths ["src-cljs"],
                 :compiler {:pretty-print true,
-                           :output-dir "resources/public/js/",
-                           :source-map true,
                            :output-to "resources/public/js/app.js",
                            :optimizations :none},
                 :id "dev"}

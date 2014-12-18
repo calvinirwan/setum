@@ -30,7 +30,18 @@
 
 (def question0 {:text "what ?"
                 :answer answer0
-                :cs "don't think.. FEEL....."})
+                :cs "don't think.. FEEL....."
+                :order 0})
+
+(def answer1 {:correct-answer "dog"
+              :choice ["dog" "wolf" "human" "loco" "fuerta"]})
+
+(def question1 {:text "what are you ?"
+                :answer answer1
+                :cs "look at the mirror what do you see"
+                :order 1})
+
+(def quiz0 [question0 question1])
 
 (defn modalspage
   "The rendering function for homepage"

@@ -16,12 +16,12 @@
    [cemerick.austin :as ca]
    [setum.repl :refer (start-server stop-server)]))
 
-(def repl-env (reset! crepl/browser-repl-env
+#_(def repl-env (reset! crepl/browser-repl-env
                       (ca/repl-env)))
 
-(defn gen-brepl [] (cemerick.austin.repls/browser-connected-repl-js))
+#_(defn gen-brepl [] (cemerick.austin.repls/browser-connected-repl-js))
 
-(defn start-brepl [] (cemerick.austin.repls/cljs-repl repl-env))
+#_(defn start-brepl [] (cemerick.austin.repls/cljs-repl repl-env))
 
 (defn start []
   (start-server))

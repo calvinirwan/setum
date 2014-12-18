@@ -43,7 +43,7 @@
 
 (defroutes home
   (GET "/" req
-       (homepage))
+       (modalspage))
   (GET "/quiz/" req
        (quizpage))
   (GET "/modals/" req

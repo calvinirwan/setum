@@ -53,37 +53,55 @@
   (.getElementsByTagName js/document tagname))
 
 (def soal (re/atom {}))
+(def index (re/atom 1))
+(def answer-post (re/atom {}))
+(def answer-record (re/atom {}))
 
-
-(defn validate-answer [choice truth]
-  (= choice truth))
+(declare get-soal)
 
 (defn moving-on []
   [:button {:class    "small right radius"
-            :id       "login-button"}
+            :id       "login-button"
+            :on-click #(get-soal)}
    "moving on"])
 
 (defn true-form []
   [:div
+   [:h2 "Jawaban lo \"" (:choice @answer-post)
+    "\" Jawaban yang bener \"" (:answer @answer-post)"\""]
    [:h3 "Way to go bitch"]
    (moving-on)])
 
 (defn false-form []
   [:div
+   [:h2 "Jawaban lo \"" (:choice @answer-post)
+    "\" Jawaban yang bener \"" (:answer @answer-post)"\""]
    [:h3 "You are a collosal failure"]
    (moving-on)])
 
-(defn aftermath [choice truth]
-  (if (validate-answer choice truth)
-    (re/render-component [true-form]
-                         (selid "quiz-form"))
-    (re/render-component [false-form]
-                         (selid "quiz-form"))))
+(defn post-answer-callback
+  [resp]
+  (let [{:keys [message stat]} resp]
+    (if stat
+      (re/render-component [true-form]
+                           (selid "quiz-form"))
+      (re/render-component [false-form]
+                           (selid "quiz-form")))))
+
+(defn post-answer
+  [choice answer]
+  (do (reset! answer-post {:choice choice
+                           :answer answer})
+      (POST "/jawab"
+            {:params {:user "dodol"
+                      :choice choice
+                      :answer answer}
+             :handler post-answer-callback})))
 
 (defn choice-maker [choice]
   [:button {:class "btn btn-default btn-block"
             :value (first choice)
-            :on-click #(aftermath choice (:answer @soal))}
+            :on-click #(post-answer choice (:answer @soal))}
    choice])
 
 (defn quiz-form
@@ -101,8 +119,7 @@
 
 (defn quiz-component []
   [:div
-   [:h3 "I am a hero"]]
-)
+   [:h3 "I am a hero"]])
 
 (defn soal-error
 	[resp]

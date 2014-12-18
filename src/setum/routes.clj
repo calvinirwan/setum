@@ -45,9 +45,10 @@
 
 (defn get-soal
   []
-  {:question "who are you"
+  {:question "who are you ?"
    :choice ["laboon" "edge" "woli" "vokin" "book"]
    :answer "vokin"})
+
 (defn modalspage
   "The rendering function for homepage"
   []
@@ -66,8 +67,9 @@
        (modalspage))
   (GET "/soal" req
        (resp/edn (get-soal)))
-  (GET "/jawab/" req
-       (resp/edn {:angka [{:name "calvin" :job "dope" }
-                          {:name "calvin2" :job "dope2" }
-                          {:name "calvin3" :job "dope3" }]})))
+  (POST "/jawab" req
+        (let [{:keys [choice user answer]} (:params req)]
+          (if (= choice answer)
+            (resp/edn {:user user :message "jawaban lo bener" :choice choice :stat true})
+            (resp/edn {:user user :message "ANJING GUOBLOAK SIA!!" :choice choice :stat false})))))
 

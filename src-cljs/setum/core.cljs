@@ -52,61 +52,9 @@
   [tagname]
   (.getElementsByTagName js/document tagname))
 
-(defn get-page
-  "Returns the classname of a body to identify which page are we in"
-  []
-  (str (.-className (selid "body"))))
-
 (def soal (re/atom {}))
-(defn choice-maker [question] [:input {:id (:id question)
-				       :text (:text question)
-				       :answer (:answer question)
-				       :check (atom false)}])
 
-(defn choice-map [choice] {:value choice
-                           :checked (re/atom false)})
 
-(def choice ["calvin" "laboon" "edge" "chris"])
-(def truth "calvin")
-
-(def dmx [{:id 1 :text "wha" :answer "lalal"}
-          {:id 2 :text "wiiii" :answer "alsda"}])
-
-#_(defn quiz-form
-  "Login-form component with logic to submit the form through ajax"
-  []
-  (let [choice (map #(choice-map %) choice)
-        question (first @current-quiz)]
-    (fn []
-      [:fieldset.quiz
-       [:legend "pilih salah satu"]
-       [:br]
-       [:input {:type        "radio"
-                :value       (:value (first choice))
-                ;;:id          (:id (first choice))
-                :name        "ew"
-                :checked     @(:checked (first choice))
-                :on-change    #(reset! (:checked (first choice))
-                                      (not @(:checked (first choice))) )}
-        (:value (first choice))] 
-       [:br]
-       [:input {:type        "radio"
-                :value       (:value (second choice))
-                ;;:id          (:id (second choice))
-                :name        "ew"
-                :checked     @(:checked (second choice))
-                :on-change   #(reset! (:checked (second choice))
-                                      (not @(:checked (second choice))) )
-                }
-        (:value (second choice))]
-       [:br]
-       [:p (str choice) (str (= (:value choice) truth))]
-       [:br]
-       ;;[:p (filter #(= false @(:checked %)) choice)]
-       
-       [:button {:class    "small right radius"
-                 :id       "login-button"}
-        "submit"]])))
 (defn validate-answer [choice truth]
   (= choice truth))
 
@@ -131,6 +79,13 @@
                          (selid "quiz-form"))
     (re/render-component [false-form]
                          (selid "quiz-form"))))
+
+(defn choice-maker [choice]
+  [:button {:class "btn btn-default btn-block"
+            :value (first choice)
+            :on-click #(aftermath choice (:answer @soal))}
+   choice])
+
 (defn quiz-form
   "Login-form component with logic to submit the form through ajax"
   []
@@ -138,20 +93,11 @@
     (fn []
       [:fieldset.quiz
        [:legend "pilih salah satu"]
-       [:h4 (:soal @soal)]
+       [:h4 (:question @soal)]
        [:br]
-       [:button {:class "btn btn-default btn-block"
-                 :value (first choice)
-                 :on-click #(aftermath (first choice) truth)}
-        (first choice)]
-       [:button {:class "btn btn-default btn-block"
-                 :value (second choice)
-                 :on-click #(aftermath (second choice) truth)}
-        (second choice)] 
+       (map #(choice-maker %) (:choice @soal)) 
        [:br]  
-       [:button {:class    "small right radius"
-                 :id       "login-button"}
-        "submit"]])))
+       ])))
 
 (defn quiz-component []
   [:div

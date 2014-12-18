@@ -43,6 +43,11 @@
 
 (def quiz0 [question0 question1])
 
+(defn get-soal
+  []
+  {:question "who are you"
+   :choice ["laboon" "edge" "woli" "vokin" "book"]
+   :answer "vokin"})
 (defn modalspage
   "The rendering function for homepage"
   []
@@ -59,6 +64,8 @@
        (quizpage))
   (GET "/modals/" req
        (modalspage))
+  (GET "/soal" req
+       (resp/edn (get-soal)))
   (GET "/jawab/" req
        (resp/edn {:angka [{:name "calvin" :job "dope" }
                           {:name "calvin2" :job "dope2" }

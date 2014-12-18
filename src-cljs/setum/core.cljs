@@ -57,13 +57,25 @@
   []
   (str (.-className (selid "body"))))
 
-(def current-quiz (atom {}))
+(def soal (re/atom {}))
+(defn choice-maker [question] [:input {:id (:id question)
+				       :text (:text question)
+				       :answer (:answer question)
+				       :check (atom false)}])
 
-(defn quiz-form
+(defn choice-map [choice] {:value choice
+                           :checked (re/atom false)})
+
+(def choice ["calvin" "laboon" "edge" "chris"])
+(def truth "calvin")
+
+(def dmx [{:id 1 :text "wha" :answer "lalal"}
+          {:id 2 :text "wiiii" :answer "alsda"}])
+
+#_(defn quiz-form
   "Login-form component with logic to submit the form through ajax"
   []
-  (let [choice [{:id "radio1" :value "laboon" :checked (atom true)}
-                {:id "radio2" :value "edgy" :checked (atom true)}]
+  (let [choice (map #(choice-map %) choice)
         question (first @current-quiz)]
     (fn []
       [:fieldset.quiz
@@ -71,23 +83,72 @@
        [:br]
        [:input {:type        "radio"
                 :value       (:value (first choice))
-                :id          (:id (first choice))
+                ;;:id          (:id (first choice))
                 :name        "ew"
                 :checked     @(:checked (first choice))
-                :on-click    #(reset! (:checked (first choice))
+                :on-change    #(reset! (:checked (first choice))
                                       (not @(:checked (first choice))) )}
         (:value (first choice))] 
        [:br]
        [:input {:type        "radio"
                 :value       (:value (second choice))
-                :id          (:id (second choice))
+                ;;:id          (:id (second choice))
                 :name        "ew"
                 :checked     @(:checked (second choice))
-                :on-click    #(reset! (:checked (second choice))
+                :on-change   #(reset! (:checked (second choice))
                                       (not @(:checked (second choice))) )
                 }
         (:value (second choice))]
        [:br]
+       [:p (str choice) (str (= (:value choice) truth))]
+       [:br]
+       ;;[:p (filter #(= false @(:checked %)) choice)]
+       
+       [:button {:class    "small right radius"
+                 :id       "login-button"}
+        "submit"]])))
+(defn validate-answer [choice truth]
+  (= choice truth))
+
+(defn moving-on []
+  [:button {:class    "small right radius"
+            :id       "login-button"}
+   "moving on"])
+
+(defn true-form []
+  [:div
+   [:h3 "Way to go bitch"]
+   (moving-on)])
+
+(defn false-form []
+  [:div
+   [:h3 "You are a collosal failure"]
+   (moving-on)])
+
+(defn aftermath [choice truth]
+  (if (validate-answer choice truth)
+    (re/render-component [true-form]
+                         (selid "quiz-form"))
+    (re/render-component [false-form]
+                         (selid "quiz-form"))))
+(defn quiz-form
+  "Login-form component with logic to submit the form through ajax"
+  []
+  (let [choice choice]
+    (fn []
+      [:fieldset.quiz
+       [:legend "pilih salah satu"]
+       [:h4 (:soal @soal)]
+       [:br]
+       [:button {:class "btn btn-default btn-block"
+                 :value (first choice)
+                 :on-click #(aftermath (first choice) truth)}
+        (first choice)]
+       [:button {:class "btn btn-default btn-block"
+                 :value (second choice)
+                 :on-click #(aftermath (second choice) truth)}
+        (second choice)] 
+       [:br]  
        [:button {:class    "small right radius"
                  :id       "login-button"}
         "submit"]])))
@@ -97,8 +158,27 @@
    [:h3 "I am a hero"]]
 )
 
-(defn start []
+(defn soal-error
+	[resp]
+	(js/alert "Soal error woi"))
+
+(defn soal-dateng
+	[resp]
+	(do (reset! soal resp)
+            (re/render-component [quiz-form]
+                                 (selid "quiz-form"))))
+	
+(defn get-soal
+	[]
+	(GET "/soal"
+             {:handler soal-dateng
+              :error-handler soal-error}))
+
+#_(defn start []
   (re/render-component [quiz-form]
                     (selid "quiz-form")))
+
+(defn start []
+  (get-soal))
 
 (start)

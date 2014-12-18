@@ -31,7 +31,7 @@
             :on-click #(do 
                          (reset! index (inc @index))
                          (reset! current-soal (nth @soal @index))                         
-                         (quiz-form))}
+                         (get-soal))}
    "moving on"])
 
 (defn true-form []
@@ -104,15 +104,25 @@
 (defn display-atom
   []
   [:div
-   [:p (nth "why" 1)
+   [:p "(nth @soal @index)"]
    [:p (str @soal)]
    [:p (str @current-soal)]
    [:p (str @index)]
    [:p (str @answer-post)]
-   [:p (str @answer-record)]]])
+   [:p (str @answer-record)]])
+
+(defn question-of-form
+  []
+  [:div {:class "panel panel-info"}
+   [:div {:class "panel-heading"}
+    [:h3 {:class "panel-title"} "Question #"]]
+   [:div {:class "panel-body"}
+    (str (inc @index) " of " (count @soal))]])
 
 (defn start []
   (do (get-soal)
+      (re/render-component [question-of-form]
+                           (selid "question-of"))
       (re/render-component [display-atom]
                            (selid "atom-form"))))
 

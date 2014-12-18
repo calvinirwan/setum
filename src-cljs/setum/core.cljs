@@ -4,42 +4,6 @@
             ;;[clojure.browser.repl]
             ))
 
-;; (defn selid [id]
-;;   (.getElementById js/document id))
-
-;; (defn read-class [id]
-;;   (str (.-className (selid id))))
-
-;; (def apapun (re/atom []))
-
-;; (defn home-component []
-;;   [:div
-;;    [:h3 "melikey! faky"]])
-
-;; (declare ambil-jawaban)
-
-;; (defn quiz-component []
-;;   [:div
-;;    [:h3 "I am a hero"]
-;;    [:h1 (str @apapun)]
-;;    [:h1 (str (first @apapun))]
-;;    [:button {:on-click #(ambil-jawaban)}]]
-;; )
-
-;; (defn page [page]
-;;   (read-class (selid page)))
-
-;; (defn ambil-callback [response]
-;;   (reset! apapun (:angka response)))
-
-;; (defn ambil-jawaban []
-;;   (GET "/jawab/" {:handler ambil-callback}))
-
-;; (defn start [page]
-;;   (condp = page
-;;     "quiz" (do (ambil-jawaban)
-;;                (re/render-component [quiz-component] (selid "soal")))
-;;     "home" (re/render-component [home-component] (selid "body"))))
 (.write js/document "Hello, ClojureScript!")
 
 (defn selid
@@ -53,16 +17,21 @@
   (.getElementsByTagName js/document tagname))
 
 (def soal (re/atom {}))
-(def index (re/atom 1))
+(def current-soal (re/atom {}))
+(def index (re/atom 0))
 (def answer-post (re/atom {}))
 (def answer-record (re/atom {}))
 
 (declare get-soal)
+(declare quiz-form)
 
 (defn moving-on []
   [:button {:class    "small right radius"
             :id       "login-button"
-            :on-click #(get-soal)}
+            :on-click #(do 
+                         (reset! index (inc @index))
+                         (reset! current-soal (nth @soal @index))                         
+                         (quiz-form))}
    "moving on"])
 
 (defn true-form []
@@ -100,26 +69,21 @@
 
 (defn choice-maker [choice]
   [:button {:class "btn btn-default btn-block"
-            :value (first choice)
-            :on-click #(post-answer choice (:answer @soal))}
+            :value choice
+            :on-click #(post-answer choice (:answer @current-soal))}
    choice])
 
 (defn quiz-form
   "Login-form component with logic to submit the form through ajax"
-  []
-  (let [choice choice]
-    (fn []
-      [:fieldset.quiz
-       [:legend "pilih salah satu"]
-       [:h4 (:question @soal)]
-       [:br]
-       (map #(choice-maker %) (:choice @soal)) 
-       [:br]  
-       ])))
-
-(defn quiz-component []
-  [:div
-   [:h3 "I am a hero"]])
+  []  
+  (fn []
+    [:fieldset.quiz
+     [:legend "Testo Booster Quiz!!"]
+     [:h4 (:question @current-soal)]
+     [:br]
+     (map #(choice-maker %) (:choice @current-soal)) 
+     [:br]  
+     ]))
 
 (defn soal-error
 	[resp]
@@ -128,20 +92,28 @@
 (defn soal-dateng
 	[resp]
 	(do (reset! soal resp)
+            (reset! current-soal (nth @soal @index))
             (re/render-component [quiz-form]
-                                 (selid "quiz-form"))))
-	
+                                 (selid "quiz-form"))))	
 (defn get-soal
 	[]
 	(GET "/soal"
              {:handler soal-dateng
               :error-handler soal-error}))
 
-#_(defn start []
-  (re/render-component [quiz-form]
-                    (selid "quiz-form")))
+(defn display-atom
+  []
+  [:div
+   [:p (nth "why" 1)
+   [:p (str @soal)]
+   [:p (str @current-soal)]
+   [:p (str @index)]
+   [:p (str @answer-post)]
+   [:p (str @answer-record)]]])
 
 (defn start []
-  (get-soal))
+  (do (get-soal)
+      (re/render-component [display-atom]
+                           (selid "atom-form"))))
 
 (start)

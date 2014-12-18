@@ -273,25 +273,25 @@
 ">
 		<p style="
     font-size: 1.5rem;
-">{{question.text}}</p><!-- Just use AJAX to show feedback and jQuery variable/object to record answers -->
+"></p><!-- Just use AJAX to show feedback and jQuery variable/object to record answers -->
 
-<form>
-  {% for choice in question.answer.choice %}
-  <button class="btn btn-default btn-block">{{choice}}</button>
-  {% endfor %}
+<!-- <form> -->
+<!--   {% for choice in question.answer.choice %} -->
+<!--   <button class="btn btn-default btn-block">{{choice}}</button> -->
+<!--   {% endfor %} -->
   
-  {% for choice in question.answer.choice %}
-  <input type="radio" name="cois" value={{choice}}>{{choice}}</input><br>
-  {% endfor %}
-  <button type="submit" class="btn btn-success btn-lg pull-right" style="
-    margin-top: 15px;
-    margin-bottom: 30px;
-">Submit</button>
+<!--   {% for choice in question.answer.choice %} -->
+<!--   <input type="radio" name="cois" value={{choice}}>{{choice}}</input><br> -->
+<!--   {% endfor %} -->
+<!--   <button type="submit" class="btn btn-success btn-lg pull-right" style=" -->
+<!--     margin-top: 15px; -->
+<!--     margin-bottom: 30px; -->
+<!-- ">Submit</button> -->
   
-</form>
+<!-- </form> -->
 <div id="quiz-form">
 </div>
-<div id="report-form">
+<div id="atom-form">
   </div>
   <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="
     clear: both;

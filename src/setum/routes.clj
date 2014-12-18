@@ -45,9 +45,20 @@
 
 (defn get-soal
   []
-  {:question "who are you ?"
-   :choice ["laboon" "edge" "woli" "vokin" "book"]
-   :answer "vokin"})
+  [{:question "who are you ?"
+    :choice ["laboon" "edge" "woli" "vokin" "book"]
+    :answer "vokin"
+    :order 0}
+
+   {:question "who are us ?"
+    :choice ["wth men ?" "toy's are us" "the world" "jewish" "hitler"]
+    :answer "wth men ?"
+    :order 1}
+
+   {:question "finally, a proper question '1 + 1 equals ?'"
+    :choice ["love coz luv is alwys rigt" "hobo" "world peace"  "2"]
+    :answer "2"
+    :order 2}])
 
 (defn modalspage
   "The rendering function for homepage"

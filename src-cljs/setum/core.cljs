@@ -20,7 +20,7 @@
 (def current-soal (re/atom {}))
 (def index (re/atom 0))
 (def answer-post (re/atom {}))
-(def answer-record (re/atom {}))
+(def answer-record (re/atom []))
 
 (declare get-soal)
 (declare quiz-form)
@@ -50,12 +50,16 @@
 
 (defn post-answer-callback
   [resp]
-  (let [{:keys [message stat]} resp]
-    (if stat
-      (re/render-component [true-form]
-                           (selid "quiz-form"))
-      (re/render-component [false-form]
-                           (selid "quiz-form")))))
+  (let [{:keys [stat choice answer]} resp]
+    (do (reset! answer-record
+                (conj @answer-record {:stat stat
+                                      :choice choice
+                                      :answer answer}))
+        (if stat
+          (re/render-component [true-form]
+                               (selid "quiz-form"))
+          (re/render-component [false-form]
+                               (selid "quiz-form"))))))
 
 (defn post-answer
   [choice answer]
@@ -111,7 +115,7 @@
    [:p (str @answer-post)]
    [:p (str @answer-record)]])
 
-(defn question-of-form
+(defn question-of-component
   []
   [:div {:class "panel panel-info"}
    [:div {:class "panel-heading"}
@@ -119,10 +123,26 @@
    [:div {:class "panel-body"}
     (str (inc @index) " of " (count @soal))]])
 
+(defn score-count
+  [answer-record soal]
+  (let [total-true (count (filter #(true? (:stat %)) answer-record))
+        total (count soal)]
+    (quot (* 100 total-true) total)))
+
+(defn score-component
+  []
+  [:div {:class "panel panel-success"}
+   [:div {:class "panel-heading"}
+    [:h3 {:class "panel-title"} "Score"]]
+   [:div {:class "panel-body"}
+    (str (score-count @answer-record @soal) "%")]])
+
 (defn start []
   (do (get-soal)
-      (re/render-component [question-of-form]
-                           (selid "question-of"))
+      (re/render-component [question-of-component]
+                           (selid "question-of-comp"))
+      (re/render-component [score-component]
+                           (selid "score-comp"))
       (re/render-component [display-atom]
                            (selid "atom-form"))))
 

@@ -81,6 +81,14 @@
   (POST "/jawab" req
         (let [{:keys [choice user answer]} (:params req)]
           (if (= choice answer)
-            (resp/edn {:user user :message "jawaban lo bener" :choice choice :stat true})
-            (resp/edn {:user user :message "ANJING GUOBLOAK SIA!!" :choice choice :stat false})))))
+            (resp/edn {:user user
+                       :message "jawaban lo bener"
+                       :choice choice
+                       :answer answer
+                       :stat true})
+            (resp/edn {:user user
+                       :message "ANJING GUOBLOAK SIA!!"
+                       :choice choice
+                       :answer answer
+                       :stat false})))))
 

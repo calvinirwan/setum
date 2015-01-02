@@ -1,0 +1,17 @@
+{:quiz {:id 4
+        :title "gramma o' 1"
+        :ordering 1
+        :questions [{:text "who are you ?"
+                     :choice ["laboon" "edge" "woli" "vokin" "book"]
+                     :answer "vokin"
+                     :ordering 0}
+
+                    {:text "who are us ?"
+                     :choice ["wth men ?" "toy's are us" "the world" "jewish" "hitler"]
+                     :answer "wth men ?"
+                     :ordering 1}
+
+                    {:text "finally, a proper question '1 + 1 equals ?'"
+                     :choice ["love coz luv is alwys rigt" "hobo" "world peace"  "2"]
+                     :answer "2"
+                     :ordering 2}]}}

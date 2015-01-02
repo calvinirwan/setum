@@ -1,0 +1,7 @@
+ {:key "laboon"
+  :base-url "base-url"
+  :db-host "localhost"
+  :db-port 5432
+  :db-name "iseng"
+  :user "postgres"
+  :password "admin"}

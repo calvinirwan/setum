@@ -1,0 +1,55 @@
+{:quiz {:id 10
+        :title "Adjective"
+        :ordering 1
+        :questions [{:text "“The party last night was fantastic.” 
+The adjective of the sentence is _____"
+                     :choice ["party" "last night" "fantastic"]
+                     :answer "fantastic"
+                     :ordering 1}
+
+                    {:text "“Students who study often learn more quickly.”
+The adjective of the sentence is _____
+"
+                     :choice ["often" "quickly" "no adjective"]
+                     :answer "no adjective"
+                     :ordering 2}
+
+                    {:text "“During basketball last night, Kobe threw a wild ball, but it went into the net!”"
+                     :choice ["last" "wild" "net"]
+                     :answer "wild"
+                     :ordering 3}
+
+                    {:text "Those are probably the _____  coffee table in the store."
+                     :choice ["fancyest" "fanciest" "most fanciest"]
+                     :answer "fanciest"
+                     :ordering 4}
+
+                    {:text "Uncle Ben is really _____  man."
+                     :choice ["a sweet old" "an old sweet" "a sweet, old"]
+                     :answer "a sweeet, old"
+                     :ordering 5}
+                    
+                    {:text "The Porsche is   _____  sports car."
+                     :choice ["a popular German" "a German popular" "a popular, German"]
+                     :answer "a popular, German"
+                     :ordering 6}
+
+                    {:text "I grew up in _____ house in Bandung."
+                     :choice ["a comfortable, little" "a little, comfortable" "a comfortable little"]
+                     :answer "a comfortable little"
+                     :ordering 7}
+
+                    {:text "Everyone was home for the holidays. What could make for _____ Christmas than that?"
+                     :choice ["a merrier" "the merriest" "a merrier"]
+                     :answer "a merrier"
+                     :ordering 8}
+
+                    {:text "Harry Potter is the _____  movie I've ever seen."
+                     :choice ["most excited" "most exciting" "most excitable"]
+                     :answer "most exciting"
+                     :ordering 9}
+
+                    {:text "My fever is definitely ___ at night."
+                     :choice ["worse" "worst" "worser"]
+                     :answer "worst"
+                     :ordering 10}]}}

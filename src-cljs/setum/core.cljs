@@ -83,7 +83,7 @@
   (fn []
     [:fieldset.quiz
      [:legend "Testo Booster Quiz!!"]
-     [:h4 (:question @current-soal)]
+     [:h4 (:ordering @current-soal) ". " (:text @current-soal)]
      [:br]
      (map #(choice-maker %) (:choice @current-soal)) 
      [:br]  
@@ -105,7 +105,7 @@
              {:handler soal-dateng
               :error-handler soal-error}))
 
-(defn display-atom
+#_(defn display-atom
   []
   [:div
    [:p "(nth @soal @index)"]

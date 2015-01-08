@@ -47,6 +47,7 @@ Temporary Items
 .lein-repl-history
 setum.log
 /target
+/quiz
 /out
 /.repl
 resources/public/js/app.js

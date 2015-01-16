@@ -77,6 +77,6 @@
             "gore"
             ["do"
              ["with-profile" "calvin,dev" "cljsbuild" "clean"]
-             ["with-profile" "calvin,dev" "cljsbuild" "auto" "dev"]]}
+             ["with-profile" "calvin,dev" "cljsbuild" "auto" "prod"]]}
   :description "FIXME: write description"
   :min-lein-version "2.0.0")

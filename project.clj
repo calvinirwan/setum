@@ -71,5 +71,12 @@
             [lein-autoexpect "1.2.2"]
             [com.cemerick/austin "0.1.5"]
             [cider/cider-nrepl "0.7.0"]]
+  :aliases {"go"
+            ["with-profile" "calvin,dev" "repl"]
+
+            "gore"
+            ["do"
+             ["with-profile" "calvin,dev" "cljsbuild" "clean"]
+             ["with-profile" "calvin,dev" "cljsbuild" "auto" "dev"]]}
   :description "FIXME: write description"
   :min-lein-version "2.0.0")

@@ -65,11 +65,7 @@
        (quizpage))
   (GET "/modals/" req
        (modalspage))
-  (GET "/soal" req
-       (resp/edn (get-soal)))
-  (POST "/jawab" req
-        (let [{:keys [choice user answer]} (:params req)]
-          (if (= choice answer)
-            (resp/edn {:user user :message "jawaban lo bener" :choice choice :stat true})
-            (resp/edn {:user user :message "ANJING GUOBLOAK SIA!!" :choice choice :stat false})))))
-
+  (GET "/jawab/" req
+       (resp/edn {:angka [{:name "calvin" :job "dope" }
+                          {:name "calvin2" :job "dope2" }
+                          {:name "calvin3" :job "dope3" }]})))

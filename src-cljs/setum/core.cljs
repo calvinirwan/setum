@@ -52,6 +52,7 @@
   [tagname]
   (.getElementsByTagName js/document tagname))
 
+<<<<<<< HEAD
 (def soal (re/atom {}))
 (def index (re/atom 1))
 (def answer-post (re/atom {}))
@@ -103,45 +104,54 @@
             :value (first choice)
             :on-click #(post-answer choice (:answer @soal))}
    choice])
+=======
+(defn get-page
+  "Returns the classname of a body to identify which page are we in"
+  []
+  (str (.-className (selid "body"))))
+
+(def current-quiz (atom {}))
+>>>>>>> parent of 6d3669d... radio button failed, changed to button instead
 
 (defn quiz-form
   "Login-form component with logic to submit the form through ajax"
   []
-  (let [choice choice]
+  (let [choice [{:id "radio1" :value "laboon" :checked (atom true)}
+                {:id "radio2" :value "edgy" :checked (atom true)}]
+        question (first @current-quiz)]
     (fn []
       [:fieldset.quiz
        [:legend "pilih salah satu"]
-       [:h4 (:question @soal)]
        [:br]
-       (map #(choice-maker %) (:choice @soal)) 
-       [:br]  
-       ])))
+       [:input {:type        "radio"
+                :value       (:value (first choice))
+                :id          (:id (first choice))
+                :name        "ew"
+                :checked     @(:checked (first choice))
+                :on-click    #(reset! (:checked (first choice))
+                                      (not @(:checked (first choice))) )}
+        (:value (first choice))] 
+       [:br]
+       [:input {:type        "radio"
+                :value       (:value (second choice))
+                :id          (:id (second choice))
+                :name        "ew"
+                :checked     @(:checked (second choice))
+                :on-click    #(reset! (:checked (second choice))
+                                      (not @(:checked (second choice))) )
+                }
+        (:value (second choice))]
+       [:br]
+       [:button {:class    "small right radius"
+                 :id       "login-button"}
+        "submit"]])))
 
 (defn quiz-component []
   [:div
    [:h3 "I am a hero"]])
 
-(defn soal-error
-	[resp]
-	(js/alert "Soal error woi"))
-
-(defn soal-dateng
-	[resp]
-	(do (reset! soal resp)
-            (re/render-component [quiz-form]
-                                 (selid "quiz-form"))))
-	
-(defn get-soal
-	[]
-	(GET "/soal"
-             {:handler soal-dateng
-              :error-handler soal-error}))
-
-#_(defn start []
+(defn start []
   (re/render-component [quiz-form]
                     (selid "quiz-form")))
-
-(defn start []
-  (get-soal))
 
 (start)
